@@ -53,8 +53,8 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "veivora",
-    name: "VeIvora",
+    slug: "velvora",
+    name: "Velvora",
     subtitle: "AI Customer Support & Sales Agent for Shopify",
     channels: ["Shopify", "Telegram", "Web"],
     category: "Support Agent",
@@ -70,8 +70,8 @@ export const projects: Project[] = [
       "Full conversation memory per customer, backed by Postgres",
     ],
     stack: ["Python", "FastAPI", "OpenRouter + Groq", "Shopify Admin API", "ChromaDB", "PostgreSQL", "Docker"],
-    repo: "https://github.com/usmanxjavaid/VeIvora-AI-Customer-Support-and-Sales-Agent-for-Shopify",
-    video: "/videos/veivora.mp4",
+    repo: "https://github.com/usmanxjavaid/Velvora-AI-Customer-Support-and-Sales-Agent-for-Shopify",
+    video: "/videos/velvora.mp4",
     featured: true,
   },
   {
