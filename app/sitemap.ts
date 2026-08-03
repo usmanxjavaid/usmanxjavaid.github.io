@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { projects, siteConfig } from "@/content/site";
 
 export const dynamic = "force-static";
+export const revalidate = false;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://usmanxjavaid.github.io";
 
