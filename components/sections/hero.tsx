@@ -23,7 +23,7 @@ export function Hero() {
         style={{ background: "var(--gradient-radial)" }}
       />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="mx-auto grid max-w-6xl items-start gap-16 lg:grid-cols-[1.1fr_0.9fr]">
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.09 } } }}>
           <motion.div variants={fadeUp}>
             <Badge tone="violet" className="mb-6">
@@ -62,6 +62,13 @@ export function Hero() {
               </span>
             ))}
           </motion.div>
+
+          <motion.a href="#skills"
+            variants={fadeUp}
+            className="mt-12 flex w-fit items-center gap-1.5 font-mono text-xs text-text-faint transition-colors hover:text-text-dim"
+          >
+            Scroll to explore <ArrowUpRight size={12} className="rotate-90" />
+          </motion.a>
         </motion.div>
 
         <motion.div
@@ -83,12 +90,6 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
-
-      <a href="#skills"
-        className="mx-auto mt-20 flex w-fit items-center gap-1.5 font-mono text-xs text-text-faint transition-colors hover:text-text-dim"
-      >
-        Scroll to explore <ArrowUpRight size={12} className="rotate-90" />
-      </a>
     </section>
   );
 }
