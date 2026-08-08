@@ -16,7 +16,7 @@ export function Hero() {
   const channelCount = new Set(projects.flatMap((p) => p.channels)).size;
 
   return (
-    <section className="relative overflow-hidden px-6 pb-28 pt-10">
+    <section className="relative overflow-hidden px-6 pb-8 pt-10">
       {/* ambient gradient wash */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[600px]"
