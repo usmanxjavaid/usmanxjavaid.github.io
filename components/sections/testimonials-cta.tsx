@@ -42,8 +42,8 @@ export function CTA() {
       <Reveal className="mx-auto max-w-4xl">
         <div className="relative overflow-hidden rounded-3xl border border-border p-12 text-center sm:p-16">
           <div
-            className="pointer-events-none absolute inset-0 -z-10 opacity-60"
-            style={{ background: "var(--gradient-radial)" }}
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]"
+            style={{ background: "var(--violet)" }}
           />
           <h2 className="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
             Have a workflow worth automating?

@@ -51,6 +51,18 @@ export type Project = {
   featured: boolean;
 };
 
+export const hero = {
+  headline: "Production-grade AI agents built to optimize how your business runs.",
+  subhead:
+    "I design AI agents that plug into the tools your business already runs on — cutting manual work, speeding up response times, and handling the repetitive parts so your team doesn't have to.",
+  credentials: [
+    { label: "Production-ready", detail: "Not a demo, not a prototype" },
+    { label: "<30 min", detail: "Client onboarding" },
+    { label: "Guardrailed", detail: "Every action logged & safe" },
+  ],
+};
+
+
 export const projects: Project[] = [
   {
     slug: "velvora",

@@ -1,40 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #1c1815;
-  --surface: #24201b;
-  --surface-2: #2d2620;
-  --border: #3d352c;
-  --border-hover: #4f4436;
+  --bg: #0b1220;
+  --surface: #101b2e;
+  --surface-2: #16233a;
+  --border: #1e2e45;
+  --border-hover: #2a3b54;
 
-  --text: #f3ece0;
-  --text-dim: #a89a88;
-  --text-faint: #6e6255;
+  --text: #eaf2ff;
+  --text-dim: #8fa3c0;
+  --text-faint: #5c7290;
 
-  /* Names kept as-is so components don't need touching — values are the
-     real change: terracotta instead of violet, sage instead of cyan. */
-  --violet: #c1623a;
-  --violet-dim: #9c4e2e;
-  --cyan: #8a9678;
-  --amber: #d3922f;
+  /* Single accent color, used everywhere — names kept from earlier
+     iterations so components don't need touching, values are the change. */
+  --violet: #22d3c8;
+  --violet-dim: #1ab5ab;
+  --cyan: #22d3c8;
+  --amber: #22d3c8;
 
-  --gradient-primary: #c1623a;
+  --gradient-primary: #22d3c8;
 
-  --font-display: var(--font-fraunces);
-  --font-body: var(--font-work-sans);
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
   --font-mono: var(--font-plex-mono);
 }
 
 .light {
-  --bg: #faf6ef;
-  --surface: #fffdfa;
-  --surface-2: #f3ede2;
-  --border: #e8dfd0;
-  --border-hover: #d8cbb5;
+  --bg: #f4f8fb;
+  --surface: #ffffff;
+  --surface-2: #eaf1f6;
+  --border: #d8e3ec;
+  --border-hover: #c2d3e0;
 
-  --text: #221d17;
-  --text-dim: #6b6055;
-  --text-faint: #9c9184;
+  --text: #0b1220;
+  --text-dim: #4a5d73;
+  --text-faint: #8199ad;
 }
 
 @theme inline {
@@ -72,7 +72,7 @@ body {
 
 ::selection {
   background: var(--violet);
-  color: white;
+  color: #0b1220;
 }
 
 :focus-visible {
@@ -84,7 +84,6 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 8px; }
 
-/* Flat surface + real border, replacing the old blurred-glass look */
 .glass {
   background: var(--surface);
   border: 1px solid var(--border);
