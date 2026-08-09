@@ -10,10 +10,8 @@ type BaseProps = {
 };
 
 const variants: Record<string, string> = {
-  primary:
-    "bg-[image:var(--gradient-primary)] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset] hover:brightness-110 hover:shadow-[0_0_24px_-4px_var(--violet)]",
-  secondary:
-    "glass text-text hover:border-border-hover hover:bg-surface-2",
+  primary: "bg-violet text-white hover:bg-violet-dim",
+  secondary: "border border-border text-text hover:border-border-hover hover:bg-surface-2",
   ghost: "text-text-dim hover:text-text",
 };
 
@@ -24,8 +22,8 @@ const sizes: Record<string, string> = {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none";
-
+  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-200 ease-out active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none";
+  
 export function Button({
   variant = "primary",
   size = "md",

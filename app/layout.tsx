@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Fraunces, Work_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
@@ -7,15 +7,16 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/content/site";
 
-const spaceGrotesk = Space_Grotesk({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  weight: ["500", "600", "700"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
-const manrope = Manrope({
+const workSans = Work_Sans({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-work-sans",
   display: "swap",
 });
 
@@ -49,13 +50,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${manrope.variable} ${plexMono.variable} font-body antialiased`}
+        className={`${fraunces.variable} ${workSans.variable} ${plexMono.variable} font-body antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScroll />
           <div id="top" />
           <Navbar />
-          <main className="pt-24">{children}</main>
+          <main className="pt-20">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

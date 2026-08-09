@@ -1,43 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0a0a12;
-  --surface: #12121e;
-  --surface-2: #191929;
-  --surface-glass: rgba(19, 19, 32, 0.6);
-  --border: #24243a;
-  --border-hover: #35355a;
+  --bg: #1c1815;
+  --surface: #24201b;
+  --surface-2: #2d2620;
+  --border: #3d352c;
+  --border-hover: #4f4436;
 
-  --text: #f2f1f7;
-  --text-dim: #9a99b3;
-  --text-faint: #5f5e78;
+  --text: #f3ece0;
+  --text-dim: #a89a88;
+  --text-faint: #6e6255;
 
-  --violet: #7c6cf5;
-  --violet-dim: #5b4fc4;
-  --cyan: #4cd3e0;
-  --amber: #f0a83c;
+  /* Names kept as-is so components don't need touching — values are the
+     real change: terracotta instead of violet, sage instead of cyan. */
+  --violet: #c1623a;
+  --violet-dim: #9c4e2e;
+  --cyan: #8a9678;
+  --amber: #d3922f;
 
-  --gradient-primary: linear-gradient(135deg, #7c6cf5 0%, #4cd3e0 100%);
-  --gradient-radial: radial-gradient(circle at center, rgba(124, 108, 245, 0.25), transparent 70%);
+  --gradient-primary: #c1623a;
 
-  --font-display: var(--font-space-grotesk);
-  --font-body: var(--font-manrope);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-work-sans);
   --font-mono: var(--font-plex-mono);
 }
 
 .light {
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --surface-2: #f2f1f8;
-  --surface-glass: rgba(255, 255, 255, 0.65);
-  --border: #e6e5ef;
-  --border-hover: #d3d1e6;
+  --bg: #faf6ef;
+  --surface: #fffdfa;
+  --surface-2: #f3ede2;
+  --border: #e8dfd0;
+  --border-hover: #d8cbb5;
 
-  --text: #14141f;
-  --text-dim: #55546b;
-  --text-faint: #8f8ea3;
-
-  --gradient-radial: radial-gradient(circle at center, rgba(124, 108, 245, 0.14), transparent 70%);
+  --text: #221d17;
+  --text-dim: #6b6055;
+  --text-faint: #9c9184;
 }
 
 @theme inline {
@@ -83,23 +80,18 @@ body {
   outline-offset: 3px;
 }
 
-/* subtle scrollbar */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 8px; }
 
+/* Flat surface + real border, replacing the old blurred-glass look */
 .glass {
-  background: var(--surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--surface);
   border: 1px solid var(--border);
 }
 
 .gradient-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--violet);
 }
 
 @media (prefers-reduced-motion: reduce) {
