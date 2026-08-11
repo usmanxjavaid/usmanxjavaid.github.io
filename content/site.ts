@@ -42,6 +42,8 @@ export type Project = {
   category: "Support Agent" | "Booking Agent" | "RAG / Chatbot" | "Lead Gen" | "Assistant";
   oneliner: string;
   overview: string;
+  challenge: string; // the hard problem this project actually had to solve
+  decision: string; // the specific engineering call made, and why
   flow: string;
   features: string[];
   stack: string[];
@@ -74,6 +76,8 @@ export const projects: Project[] = [
       "Looks up real orders, answers product questions from the live catalog, and only refunds when the rules actually allow it.",
     overview:
       "A production-grade support agent for Shopify stores. It authenticates against the store's real Admin API, so every order lookup, refund, and catalog answer reflects live data — not a static script. Refund logic follows shipment status automatically, and anything outside its authority is escalated into a proper support ticket with full conversation history attached.",
+    challenge: "An agent that can issue refunds against a live store is genuinely risky to get wrong — too much autonomy and it refunds orders it shouldn't; too little and it's not actually saving anyone time.",
+    decision: "Refund authority is gated by shipment status, not by asking the model whether a refund 'seems okay.' Unshipped orders refund automatically; fulfilled ones require a human to confirm. The money decision is deterministic, never probabilistic.",
     flow: "message → tool-calling agent decides: reply, look up an order, check the catalog, or hand off to a human — every step logged to Postgres.",
     features: [
       "Refunds follow shipment status — unshipped orders refund automatically, fulfilled ones need a human to confirm",
@@ -95,6 +99,8 @@ export const projects: Project[] = [
     oneliner: "Patients book, view, or cancel an appointment just by chatting — no menus, no phone calls.",
     overview:
       "A WhatsApp-native front desk for clinics. Booking happens in natural language rather than a rigid button flow, appointments sync straight to a real Google Calendar and Sheet, and patient questions are answered from the clinic's own handbook using retrieval-augmented generation. Voice messages are transcribed and understood the same as text.",
+    challenge: "Natural-language booking is harder than a button flow because patients phrase requests in endless different ways — and in healthcare, a double-booking isn't a minor bug.",
+    decision: "Google Calendar is treated as the single source of truth instead of a separate internal booking table. Every check reads the real calendar directly, so there's no internal state that can quietly drift out of sync with it.",
     flow: "message → intent detected → book, view, cancel, or answered straight from the clinic handbook — calendar and sheet update instantly.",
     features: [
       "Books directly into a real Google Calendar and logs every appointment to Google Sheets",
@@ -116,6 +122,8 @@ export const projects: Project[] = [
     oneliner: "Reads a clinic's own documents and answers patient questions on WhatsApp, day or night.",
     overview:
       "A leaner WhatsApp support agent built around a simple idea: don't reach for a vector database until the knowledge base is actually big enough to need one. Under a few thousand words, it answers directly from context; past that, it automatically switches to full retrieval-augmented generation.",
+    challenge: "A vector database adds real latency and infrastructure for a clinic whose entire FAQ might be 500 words — but skipping RAG entirely breaks the moment the knowledge base actually grows.",
+    decision: "Built a size-based switch instead of picking one architecture up front: under ~4,000 words it answers directly from context, and only promotes itself to full RAG once the content actually justifies the extra complexity.",
     flow: "question comes in → knowledge base under 4,000 words answers directly; anything larger gets vector-searched first.",
     features: [
       "Auto-switches between simple mode and full RAG mode depending on knowledge-base size",
@@ -136,6 +144,8 @@ export const projects: Project[] = [
     oneliner: "Upload a contract or manual, ask it questions in plain English, get an answer with the exact page it came from.",
     overview:
       "A document Q&A tool built to run entirely on free-tier infrastructure. Files are chunked and embedded locally, so no OpenAI key or paid vector database is required — only the retrieved snippet is ever sent to the LLM. Every answer cites the exact page it was pulled from.",
+    challenge: "Most RAG tutorials quietly assume a paid OpenAI key and a paid vector database — a real barrier for anyone actually trying to ship something cheaply, or hand it to a client without ongoing API bills.",
+    decision: "Built the whole pipeline on free-tier tools by default — local embeddings, Groq for generation, ChromaDB for storage — instead of defaulting to the 'obvious' paid stack most guides point to.",
     flow: "upload a file → chunked and embedded locally → ask a question → answer arrives with a source-page citation.",
     features: [
       "Runs entirely on free-tier tools — no OpenAI key, no paid vector database",
@@ -156,6 +166,8 @@ export const projects: Project[] = [
     oneliner: "Reads a business's own PDFs and website, then answers customer questions around the clock.",
     overview:
       "A general-purpose Telegram support bot built for small businesses that don't have a dedicated support team. It ingests a business's existing documents and website as its knowledge base, rates its own answers via customer feedback, and automatically falls back to a second model if the primary one is unavailable.",
+    challenge: "Committing to a single LLM provider means the entire bot goes dark the moment that provider has an outage — and outages happen to every provider eventually.",
+    decision: "Built automatic failover to a second model (HuggingFace) if the primary one (Groq) fails, instead of just surfacing an error. A provider outage degrades answer quality slightly; it doesn't take the bot offline.",
     flow: "question comes in → Groq answers from the business's own docs → HuggingFace steps in automatically if Groq fails.",
     features: [
       "Falls back to a second model automatically if the primary AI is unavailable",
@@ -176,6 +188,8 @@ export const projects: Project[] = [
     oneliner: "Books, reschedules, and reminds — with live slot availability so nothing double-books.",
     overview:
       "A drop-in booking agent for any service-based business. Availability is pulled live from the booking database so there's no risk of double-booking, reminders fire automatically an hour ahead of every appointment, and the business owner is notified in Telegram the moment a new booking lands.",
+    challenge: "Cached or stale availability data is how double-bookings happen — the moment two people try to book close together against out-of-date data, one of them gets a slot that isn't real.",
+    decision: "Every availability check queries the booking database live, on every request, instead of caching a schedule for speed. Slightly heavier per-request, but a double-booking becomes structurally impossible rather than just unlikely.",
     flow: "pick a service, date, and time slot → confirmed instantly → reminder fires automatically an hour before.",
     features: [
       "Shows live availability pulled straight from the booking database",
@@ -196,6 +210,8 @@ export const projects: Project[] = [
     oneliner: "Runs a natural conversation to collect and qualify a lead, then hands it straight to sales.",
     overview:
       "A conversational lead-capture agent designed to replace a static contact form. It collects and validates name, email, phone, and service interest in real time, notifies the business the instant a lead comes in, and tracks every lead through a simple new → contacted → converted pipeline.",
+    challenge: "A lead list full of typo emails and fake phone numbers is worse than no list at all — sales ends up spending time chasing leads that were never contactable in the first place.",
+    decision: "Email and international phone formats are validated live, mid-conversation, before anything is saved — not cleaned up afterward. Every stored lead is contactable by construction, not by luck.",
     flow: "conversation collects name, email, phone, and interest → validated live → saved, and the admin is pinged instantly.",
     features: [
       "Validates email and international phone formats as the conversation happens",
@@ -216,6 +232,8 @@ export const projects: Project[] = [
     oneliner: "Live prices and plain-English market questions, answered — with no financial-advice overreach.",
     overview:
       "A beginner-friendly crypto assistant built around a button-first interface instead of a command-heavy one. It pulls live prices from CoinGecko's public API and answers general market questions with an LLM, while staying explicitly clear of financial advice.",
+    challenge: "A crypto bot that casually answers 'should I buy X' drifts straight into financial-advice territory — a real liability problem, not just a tone problem.",
+    decision: "Kept the interface button-first rather than open-ended, and scoped every response to stay descriptive (prices, definitions, market snapshots) instead of prescriptive. It informs; it never recommends.",
     flow: "tap a button → live price, a market snapshot, or an AI-answered question — no commands to memorize.",
     features: [
       "Button-based menus instead of a command-heavy interface",

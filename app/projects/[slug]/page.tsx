@@ -32,7 +32,8 @@ export default function ProjectDetail({ params }: { params: { slug: string } }) 
   return (
     <article className="px-6 pb-24 pt-6">
       <div className="mx-auto max-w-4xl">
-        <Link href="/projects"
+        <Link
+          href="/projects"
           className="mb-10 inline-flex items-center gap-1.5 font-mono text-xs text-text-dim hover:text-text"
         >
           <ArrowLeft size={14} /> All projects
@@ -71,6 +72,17 @@ export default function ProjectDetail({ params }: { params: { slug: string } }) 
           <div>
             <h2 className="font-display text-lg font-semibold text-text">Overview</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-text-dim">{project.overview}</p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border border-border bg-surface p-5">
+                <p className="mb-2 font-mono text-[11px] uppercase tracking-wider text-text-faint">The hard part</p>
+                <p className="text-sm leading-relaxed text-text">{project.challenge}</p>
+              </div>
+              <div className="rounded-xl border border-violet/30 bg-violet/5 p-5">
+                <p className="mb-2 font-mono text-[11px] uppercase tracking-wider text-violet">The decision</p>
+                <p className="text-sm leading-relaxed text-text">{project.decision}</p>
+              </div>
+            </div>
 
             <div className="mt-8 rounded-xl border border-border bg-surface p-4 font-mono text-[13px] leading-relaxed text-text-dim">
               <span className="text-amber">flow</span> — {project.flow}
