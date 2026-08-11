@@ -2,23 +2,67 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Check, ArrowUp } from "lucide-react";
+import { Mail, Copy, Check, ExternalLink, ArrowUp } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 import { navLinks, siteConfig } from "@/content/site";
 
-export function Footer() {
+function EmailReveal({ trigger }: { trigger: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(siteConfig.email);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 1500);
     } catch {
-      // clipboard API unavailable — fail silently, link text still shows the email on hover via title attr
+      // clipboard unavailable — email is still visible in the popover either way
     }
   };
 
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}`;
+
+  return (
+    <div className="relative">
+      <button onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Show email address">
+        {trigger}
+      </button>
+
+      {open && (
+        <div className="absolute left-1/2 top-full z-20 mt-2 w-64 -translate-x-1/2 rounded-xl border border-border bg-surface p-4 shadow-lg sm:left-0 sm:translate-x-0">
+          <p className="break-all font-mono text-[13px] text-text">{siteConfig.email}</p>
+
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={copyEmail}
+              className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs text-text-dim transition-colors hover:border-border-hover hover:text-text"
+            >
+              {copied ? <Check size={13} className="text-violet" /> : <Copy size={13} />}
+              {copied ? "Copied" : "Copy"}
+            </button>
+            <a
+              href={gmailComposeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-violet px-3 py-2 text-xs font-medium text-white hover:bg-violet-dim"
+            >
+              Open in Gmail <ExternalLink size={12} />
+            </a>
+          </div>
+
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="mt-2.5 block text-center font-mono text-[11px] text-text-faint hover:text-text-dim"
+          >
+            or open in your default mail app
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-6xl px-6 py-14">
@@ -53,22 +97,13 @@ export function Footer() {
                   <LinkedinIcon className="h-4 w-4" />
                 </a>
               )}
-              <div className="relative">
-                
-                 <a href={`mailto:${siteConfig.email}`}
-                  onClick={copyEmail}
-                  title={siteConfig.email}
-                  aria-label="Email — opens your mail app, and copies the address as a backup"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-dim transition-colors hover:border-border-hover hover:text-text"
-                >
-                  {copied ? <Check size={16} className="text-violet" /> : <Mail size={16} />}
-                </a>
-                {copied && (
-                  <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-border bg-surface px-2.5 py-1 font-mono text-[11px] text-text">
-                    Address copied too
+              <EmailReveal
+                trigger={
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-dim transition-colors hover:border-border-hover hover:text-text">
+                    <Mail size={16} />
                   </span>
-                )}
-              </div>
+                }
+              />
             </div>
           </div>
 
@@ -94,9 +129,7 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href={`mailto:${siteConfig.email}`} onClick={copyEmail} className="text-sm text-text-dim hover:text-text">
-                    {copied ? "Address copied too" : "Email"}
-                  </a>
+                  <EmailReveal trigger={<span className="text-sm text-text-dim hover:text-text">Email</span>} />
                 </li>
               </ul>
             </div>
@@ -105,7 +138,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p className="font-mono text-xs text-text-faint">
-            © {new Date().getFullYear()} {siteConfig.name}. Built with Next.js.
+            © {new Date().getFullYear()} {siteConfig.name} · <a href={siteConfig.github + "/usmanxjavaid.github.io"} target="_blank" rel="noopener noreferrer" className="hover:text-text-dim">Source on GitHub</a>
           </p>
           <a href="#top"
             className="flex items-center gap-1.5 font-mono text-xs text-text-dim hover:text-text"
