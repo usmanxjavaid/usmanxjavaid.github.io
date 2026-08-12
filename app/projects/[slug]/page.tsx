@@ -9,12 +9,17 @@ import { GithubIcon } from "@/components/ui/brand-icons";
 import { ProjectVideo } from "@/components/projects/project-video";
 import { ProjectCard } from "@/components/projects/project-card";
 
+type ProjectPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const project = projects.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
     title: project.name,
@@ -22,13 +27,14 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function ProjectDetail({ params }: { params: { slug: string } }) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectDetail({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
 
-  const currentIndex = projects.findIndex((p) => p.slug === params.slug);
+  const currentIndex = projects.findIndex((p) => p.slug === slug);
   const next = projects[(currentIndex + 1) % projects.length];
-
+  
   return (
     <article className="px-6 pb-24 pt-6">
       <div className="mx-auto max-w-4xl">
